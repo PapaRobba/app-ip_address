@@ -46,47 +46,47 @@ class IpAddress {
     // Developer Hub https://developer.itential.io/ located
     // under Documentation -> Developer Guides -> Log Class Guide
     log.info('Starting the IpAddress product.');
-    getFirstIpAddress(cidrStr, callback) {
+  }
+  getFirstIpAddress(cidrStr, callback) {
 
-      // Initialize return arguments for callback
-      let firstIpAddress = null;
-      let callbackError = null;
-      // let ipv4 = null;
-      // let ipv6 = null;
+    // Initialize return arguments for callback
+    let firstIpAddress = null;
+    let callbackError = null;
+    // let ipv4 = null;
+    // let ipv6 = null;
   
-      // Instantiate an object from the imported class and assign the instance to variable cidr.
-      const cidr = new IPCIDR(cidrStr);
-      // Initialize options for the toArray() method.
-      // We want an offset of one and a limit of one.
-      // This returns an array with a single element, the first host address from the subnet.
-      const options = {
-        from: 1,
-        limit: 1
-      };
+    // Instantiate an object from the imported class and assign the instance to variable cidr.
+    const cidr = new IPCIDR(cidrStr);
+    // Initialize options for the toArray() method.
+    // We want an offset of one and a limit of one.
+    // This returns an array with a single element, the first host address from the subnet.
+    const options = {
+      from: 1,
+      limit: 1
+    };
 
-      // Use the object's isValid() method to verify the passed CIDR.
-      if (!cidr.isValid()) {
-        // If the passed CIDR is invalid, set an error message.
-        callbackError = 'Error: Invalid CIDR passed to getFirstIpAddress.';
-        var ipv4 = null;
-        var ipv6 = null;
-        var myjson = { "ipv4": ipv4, "ipv6": ipv6 };
-      } else {
-        // If the passed CIDR is valid, call the object's toArray() method.
-        // Notice the destructering assignment syntax to get the value of the first array's element.
-        [firstIpAddress] = cidr.toArray(options);
-        var ipv4 = firstIpAddress;
-        var ipv6 = getIpv4MappedIpv6Address(firstIpAddress);
-        // console.log(mappedAddress);
-        var myjson = { "ipv4": ipv4, "ipv6": ipv6 };
-      }
-  
-      // Call the passed callback function.
-      // Node.js convention is to pass error data as the first argument to a callback.
-      // The IAP convention is to pass returned data as the first argument and error
-      // data as the second argument to the callback function.
-      return callback(myjson, callbackError);
+    // Use the object's isValid() method to verify the passed CIDR.
+    if (!cidr.isValid()) {
+      // If the passed CIDR is invalid, set an error message.
+      callbackError = 'Error: Invalid CIDR passed to getFirstIpAddress.';
+      var ipv4 = null;
+      var ipv6 = null;
+      var myjson = { "ipv4": ipv4, "ipv6": ipv6 };
+    } else {
+      // If the passed CIDR is valid, call the object's toArray() method.
+      // Notice the destructering assignment syntax to get the value of the first array's element.
+      [firstIpAddress] = cidr.toArray(options);
+      var ipv4 = firstIpAddress;
+      var ipv6 = getIpv4MappedIpv6Address(firstIpAddress);
+      // console.log(mappedAddress);
+      var myjson = { "ipv4": ipv4, "ipv6": ipv6 };
     }
+  
+    // Call the passed callback function.
+    // Node.js convention is to pass error data as the first argument to a callback.
+    // The IAP convention is to pass returned data as the first argument and error
+    // data as the second argument to the callback function.
+    return callback(myjson, callbackError);
   }
 }
 
